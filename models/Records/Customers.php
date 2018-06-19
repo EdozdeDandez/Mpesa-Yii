@@ -63,11 +63,14 @@ class Customers extends \yii\db\ActiveRecord
             'date_of_birth' => 'Date Of Birth',
             'national_id' => 'National ID',
             'agent_id' => 'Agent ID',
-            'created_at' => 'Created At',
+            'created_at' => 'Date Added',
             'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
+            'updated_at' => 'Date Updated',
             'updated_by' => 'Updated By',
-            'fullName' => 'Full Name',
+            'fullName' => 'Name',
+            'agentName' => 'Agent',
+            'creator' => 'Added By',
+            'updater' => 'Updated By',
         ];
     }
 
@@ -114,5 +117,20 @@ class Customers extends \yii\db\ActiveRecord
     public function getFullName()
     {
         return "{$this->firstName} {$this->surname}";
+    }
+
+    public function getAgentName()
+    {
+        return $this->agent->name;
+    }
+
+    public function getCreator()
+    {
+        return $this->createdBy->username;
+    }
+
+    public function getUpdater()
+    {
+        return $this->updatedBy->username;
     }
 }

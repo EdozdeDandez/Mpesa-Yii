@@ -63,6 +63,7 @@ class Agents extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'fullName' => 'Name'
         ];
     }
 
@@ -90,7 +91,7 @@ class Agents extends \yii\db\ActiveRecord
         return $this->hasMany(Customers::className(), ['agent_id' => 'id']);
     }
 
-    public function getFullNameAttribute()
+    public function getFullName()
     {
         return "{$this->firstName} {$this->surname}";
     }

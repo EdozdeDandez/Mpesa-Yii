@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Records\Customers */
 
-$this->title = $model->id;
+$this->title = $model->fullName;
 $this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,16 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'phone',
-            'firstName',
-            'surname',
             'fullName',
             'date_of_birth',
             'national_id',
-            'agent_id',
+            'agentName',
             'created_at',
-            'created_by',
+            'creator',
             'updated_at',
-            'updated_by',
+            'updater',
         ],
     ]) ?>
 
