@@ -77,6 +77,7 @@ class ProductsController extends Controller
     public function actionCreate()
     {
         $model = new Products();
+        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,6 +98,7 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

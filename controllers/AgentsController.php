@@ -65,6 +65,7 @@ class AgentsController extends Controller
     public function actionCreate()
     {
         $model = new Agents();
+        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -85,6 +86,7 @@ class AgentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
