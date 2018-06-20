@@ -68,6 +68,7 @@ class AgentsController extends Controller
         $model = new Agents();
         $model->created_by = Yii::$app->user->id;
         $model->created_at = Carbon::now();
+        $model->agent_number = rand(1000, 999999);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
