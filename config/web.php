@@ -21,8 +21,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'app\models\Records\Users',
+            'enableAutoLogin' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -54,7 +54,7 @@ $config = [
         */
     ],
     'params' => $params,
-    //'defaultRoute' => 'mpesa/index',
+    'defaultRoute' => 'site/login',
 ];
 
 if (YII_ENV_DEV) {
