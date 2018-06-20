@@ -2,6 +2,7 @@
 
 namespace app\models\Records;
 
+use borales\extensions\phoneInput\PhoneInputBehavior;
 use Carbon\Carbon;
 use Yii;
 

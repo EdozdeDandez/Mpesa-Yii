@@ -22,6 +22,8 @@ use borales\extensions\phoneInput\PhoneInput;
     <?= $form->field($model, 'phone')->widget(PhoneInput::className(),[
         'jsOptions' => [
             'preferredCountries' => ['ke', 'ug', 'tz'],
+            'nationalMode' => false,
+            'allowExtensions' => true,
         ]
     ]) ?>
 
