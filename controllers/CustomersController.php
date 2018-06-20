@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Records\Agents;
 use Yii;
 use app\models\Records\Customers;
 use app\models\Search\CustomersSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -78,6 +80,7 @@ class CustomersController extends Controller
     public function actionCreate()
     {
         $model = new Customers();
+        $agents = ArrayHelper::map(Agents::find()->all(),'id','name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -85,6 +88,7 @@ class CustomersController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'agents' => $agents
         ]);
     }
 
@@ -98,13 +102,14 @@ class CustomersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $agents = ArrayHelper::map(Agents::find()->all(),'id','name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'agents' => $agents, 'model' => $model,
         ]);
     }
 

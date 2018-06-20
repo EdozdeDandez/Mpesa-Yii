@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Records\Products;
 use Yii;
 use app\models\Records\Services;
 use app\models\Search\ServicesSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -77,6 +79,7 @@ class ServicesController extends Controller
     public function actionCreate()
     {
         $model = new Services();
+        $products = ArrayHelper::map(Products::find()->all(),'id','name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -84,6 +87,7 @@ class ServicesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'products' => $products
         ]);
     }
 
@@ -97,6 +101,7 @@ class ServicesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $products = ArrayHelper::map(Products::find()->all(),'id','name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -104,6 +109,7 @@ class ServicesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'products' => $products
         ]);
     }
 
