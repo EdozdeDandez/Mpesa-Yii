@@ -2,6 +2,7 @@
 
 namespace app\models\Records;
 
+use Carbon\Carbon;
 use Yii;
 
 /**
@@ -56,14 +57,16 @@ class Agents extends \yii\db\ActiveRecord
             'id' => 'ID',
             'firstName' => 'First Name',
             'surname' => 'Surname',
-            'name' => 'Name',
+            'name' => 'Business Name',
             'date_of_birth' => 'Date Of Birth',
             'agent_number' => 'Agent Number',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
-            'fullName' => 'Name'
+            'fullName' => 'Name',
+            'creator' => 'Added By',
+            'updater' => 'Updated By',
         ];
     }
 
@@ -94,5 +97,29 @@ class Agents extends \yii\db\ActiveRecord
     public function getFullName()
     {
         return "{$this->firstName} {$this->surname}";
+    }
+
+    public function getCreator()
+    {
+        return $this->createdBy->username;
+    }
+
+    public function getUpdater()
+    {
+        return $this->updatedBy? $this->updatedBy->username : null;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->date_of_birth = Carbon::parse($this->date_of_birth)->format('Y-m-d');
+            $this->updated_at = Carbon::now();
+            if (!$this->getIsNewRecord()){
+                $this->updated_by = Yii::$app->user->id;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Carbon\Carbon;
 use Yii;
 use app\models\Records\Agents;
 use app\models\Search\AgentsSearch;
@@ -66,6 +67,7 @@ class AgentsController extends Controller
     {
         $model = new Agents();
         $model->created_by = Yii::$app->user->id;
+        $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,7 +88,6 @@ class AgentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

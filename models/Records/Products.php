@@ -2,6 +2,7 @@
 
 namespace app\models\Records;
 
+use Carbon\Carbon;
 use Yii;
 
 /**
@@ -58,6 +59,8 @@ class Products extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'creator' => 'Added By',
+            'updater' => 'Updated By',
         ];
     }
 
@@ -91,5 +94,28 @@ class Products extends \yii\db\ActiveRecord
     public function getServices()
     {
         return $this->hasMany(Services::className(), ['product_id' => 'id']);
+    }
+
+    public function getCreator()
+    {
+        return $this->createdBy->username;
+    }
+
+    public function getUpdater()
+    {
+        return $this->updatedBy? $this->updatedBy->username : null;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->updated_at = Carbon::now();
+            if (!$this->getIsNewRecord()){
+                $this->updated_by = Yii::$app->user->id;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

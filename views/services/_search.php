@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+<!--    --><?//= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'name') ?>
 
@@ -23,7 +23,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'product_id') ?>
+    <?= $form->field($model, 'productName') ?>
+
+    <?= $form->field($model, 'creator') ?>
+
+    <!--    --><?//= $form->field($model, 'product_id') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

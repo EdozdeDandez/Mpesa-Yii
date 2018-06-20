@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Carbon\Carbon;
 use Yii;
 use app\models\Records\Products;
 use app\models\Search\ProductsSearch;
@@ -78,6 +79,7 @@ class ProductsController extends Controller
     {
         $model = new Products();
         $model->created_by = Yii::$app->user->id;
+        $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,7 +100,6 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

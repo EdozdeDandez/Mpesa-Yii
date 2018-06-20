@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Records\Products;
+use Carbon\Carbon;
 use Yii;
 use app\models\Records\Services;
 use app\models\Search\ServicesSearch;
@@ -81,6 +82,7 @@ class ServicesController extends Controller
         $model = new Services();
         $products = ArrayHelper::map(Products::find()->all(),'id','name');
         $model->created_by = Yii::$app->user->id;
+        $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -103,7 +105,6 @@ class ServicesController extends Controller
     {
         $model = $this->findModel($id);
         $products = ArrayHelper::map(Products::find()->all(),'id','name');
-        $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

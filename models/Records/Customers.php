@@ -2,6 +2,7 @@
 
 namespace app\models\Records;
 
+use Carbon\Carbon;
 use Yii;
 
 /**
@@ -131,6 +132,20 @@ class Customers extends \yii\db\ActiveRecord
 
     public function getUpdater()
     {
-        return $this->updatedBy->username;
+        return $this->updatedBy? $this->updatedBy->username : null;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->date_of_birth = Carbon::parse($this->date_of_birth)->format('Y-m-d');
+            $this->updated_at = Carbon::now();
+            if (!$this->getIsNewRecord()){
+                $this->updated_by = Yii::$app->user->id;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

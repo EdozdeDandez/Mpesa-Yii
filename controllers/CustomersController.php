@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Carbon\Carbon;
 
 /**
  * CustomersController implements the CRUD actions for Customers model.
@@ -82,6 +83,7 @@ class CustomersController extends Controller
         $model = new Customers();
         $agents = ArrayHelper::map(Agents::find()->all(),'id','name');
         $model->created_by = Yii::$app->user->id;
+        $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -104,7 +106,6 @@ class CustomersController extends Controller
     {
         $model = $this->findModel($id);
         $agents = ArrayHelper::map(Agents::find()->all(),'id','name');
-        $model->updated_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
