@@ -39,6 +39,7 @@ class Agents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['firstName', 'surname', 'date_of_birth'], 'required'],
             [['date_of_birth', 'created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['firstName', 'surname', 'agent_number'], 'string', 'max' => 45],
