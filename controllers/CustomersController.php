@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Records\Agents;
+use app\utils\AlertUtils;
 use Yii;
 use app\models\Records\Customers;
 use app\models\Search\CustomersSearch;
@@ -86,6 +87,7 @@ class CustomersController extends Controller
         $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AlertUtils::sendSMS($model->phone, 'You have been successfully registered.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
