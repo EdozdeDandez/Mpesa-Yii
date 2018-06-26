@@ -1,8 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
+use \app\widgets\MyGridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Records\AgentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Agents', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= MyGridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
