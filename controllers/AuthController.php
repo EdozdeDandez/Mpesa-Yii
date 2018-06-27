@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Carbon\Carbon;
 use Yii;
 use app\models\Records\Users;
 use app\models\Search\UsersSearch;
@@ -77,6 +78,7 @@ class AuthController extends Controller
     public function actionCreate()
     {
         $model = new Users();
+        $model->created_at = Carbon::now();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -15,7 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Users', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if (Yii::$app->user->identity->is_admin){?>
+            <?= Html::a('Create Users', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php } ?>
+
     </p>
 
     <?= MyGridView::widget([
@@ -24,14 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'username',
-            'password',
-            'remember_token',
             'created_at',
-            //'updated_at',
+            'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return \Yii::$app->user->id === $model->id;
+                    },
+                    'delete' => function ($model) {
+                        return \Yii::$app->user->identity->is_admin;
+                    },
+                ]],
         ],
     ]); ?>
 </div>

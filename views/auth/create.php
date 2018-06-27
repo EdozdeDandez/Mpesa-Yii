@@ -1,21 +1,19 @@
 <?php
-
 use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Records\Users */
-
-$this->title = 'Create Users';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Register';
 ?>
-<div class="users-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading"><?= Html::encode($this->title) ?></div>
+                <?= $this->render('_form', [
+                    'model' => $model,
+                ]) ?>
+            </div>
+        </div>
+    </div>
 </div>
+

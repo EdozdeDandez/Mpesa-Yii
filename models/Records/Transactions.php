@@ -61,6 +61,8 @@ class Transactions extends \yii\db\ActiveRecord
             'message' => 'Message',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'customer.fullName' => 'Customer',
+            'service.name' => 'Service'
         ];
     }
 

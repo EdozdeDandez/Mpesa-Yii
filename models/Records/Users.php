@@ -2,6 +2,7 @@
 
 namespace app\models\Records;
 
+use Carbon\Carbon;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
@@ -28,6 +29,7 @@ use yii\web\IdentityInterface;
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
+    public $password_confirm;
     /**
      * {@inheritdoc}
      */
@@ -42,9 +44,12 @@ class Users extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'password'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['username'], 'string', 'max' => 45],
             [['password', 'remember_token'], 'string', 'max' => 255],
+            [['password'], 'string', 'min' => 6],
+            ['password_confirm', 'compare', 'compareAttribute'=>'password', 'skipOnEmpty' => false, 'message'=>"Passwords don't match"],
         ];
     }
 
@@ -57,7 +62,9 @@ class Users extends ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
+            'password_confirm' => 'Confirm password',
             'remember_token' => 'Remember Token',
+            'is_admin' => 'Admin',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -172,25 +179,36 @@ class Users extends ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
+    /**
+     * @throws NotSupportedException
+     */
+
     public function getAuthKey()
     {
         throw new NotSupportedException();
     }
 
+    /**
+     * @throws NotSupportedException
+     */
     public function validateAuthKey($authKey)
     {
         throw new NotSupportedException();
     }
 
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
     public function validatePassword($password)
     {
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+            $this->updated_at = Carbon::now();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

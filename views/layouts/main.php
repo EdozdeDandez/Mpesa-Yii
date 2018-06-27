@@ -51,6 +51,8 @@ AppAsset::register($this);
                 ['label' => 'Customers', 'url' => ['/customers/index']],
                 ['label' => 'Services', 'url' => ['/services/index']],
                 ['label' => 'Products', 'url' => ['/products/index']],
+                ['label' => 'Transactions', 'url' => ['/transactions/index']],
+                ['label' => 'Users', 'url' => ['/auth/index']],
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
